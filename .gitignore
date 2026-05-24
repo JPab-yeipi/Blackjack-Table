@@ -21,3 +21,16 @@ dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Python compilation
+__pycache__/
+*.pyc
+
+# local vs code config
+.vscode/
+
+# Python Virtual Environments
+venv/
+.venv/
+env/
+ENV/
