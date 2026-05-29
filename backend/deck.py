@@ -40,8 +40,16 @@ class Deck():
                 self._cards.append(card)
 
     # getters -----------------------------------------------
+    @property
     def cards(self):
         return self._cards
+    
+    @property
+    def num_cards(self):
+        num = 0
+        for c in self._cards:
+            num += 1
+        return num
 
     # Methods -----------------------------------------------
 
@@ -57,4 +65,15 @@ class Deck():
     def __str__(self):
         return ", ".join(str(card) for card in self._cards)
     
-    
+    def __call__(self):
+        print(f'remaining cards: {self.num_cards}')
+
+        # if theres not enought cards left on deck, We fill the deck with cards again
+        if(self.num_cards < 5):
+            print("deck has been re-shuffle ----")
+            self._cards = []
+
+            for s in self._suits:
+                for v in self._values:
+                    card = Card(s, v)
+                    self._cards.append(card)

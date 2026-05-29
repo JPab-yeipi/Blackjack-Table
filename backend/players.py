@@ -31,7 +31,7 @@ class Player():
                     total_v += int(card.value)
                 elif(card.value in ['J', 'Q', 'K']):
                     total_v += 10
-                elif(card.value == 'A' and not aces):
+                elif(card.value == 'A'):
                     if (aces):
                         total_v += 1
                     else:
@@ -54,6 +54,14 @@ class Player():
 
     # Methods ---------------------
 
+    # Method to know how many cards each player have
+    def num_cards(self):
+        num = 0
+        for c in self.hand:
+            num += 1
+
+        return num
+
     # this method gives the player cards based on if its the firts time or not
     def hit(self, d:Deck):
         card: Card
@@ -71,7 +79,7 @@ class Player():
         # if the hand value is less than 16, 100% the AI would hit
         while(self.hand_value < 16):
             self.hit(d)
-            print(f'{self._name} hits -> total value: {self.hand_value}')
+            print(f'{self._name} hits a {self._hand[-1]} -> new total value: {self.hand_value}')
 
         # if the hand value is exactly 16, theres a 50/50 chance the AI will hit 
         if(self.hand_value == 16):
@@ -80,3 +88,7 @@ class Player():
 
             if (risk == 1):
                 self.hit(d)
+
+    # we restart the player hand so we can play again
+    def restart_hand(self):
+        self._hand: list[Card] = []
