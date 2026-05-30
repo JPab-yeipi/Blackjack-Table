@@ -4,9 +4,37 @@ import random
 
 # Player class: it would be used by the player and the croupier
 class Player():
-    def __init__(self, name:str):
+    def __init__(self, name: str, money: float = 100.0):
         self._name = name
         self._hand: list[Card] = []
+        self._money = money
+        self._current_bet = 0.0
+
+    # Money getter
+    @property
+    def balance(self) -> float:
+        return self._money
+
+    # Place a bet: subtracts money from balance and stores the current bet amount
+    def place_bet(self, amount: float):
+        if amount <= 0:
+            raise ValueError("Bet amount must be positive.")
+        if amount > self._money:
+            raise ValueError("Insufficient balance to place bet.")
+        self._money -= amount
+        self._current_bet = amount
+
+    # Award winnings: receives a multiplier and rewards accordingly, resets current bet to zero after
+    def award_winnings(self, multiplier: float):
+        # winnings = bet * multiplier; can be negative for losses or positive for wins
+        winnings = self._current_bet * multiplier
+        self._money += winnings
+        self._current_bet = 0.0
+
+    # getter for the current bet amount
+    @property
+    def current_bet(self) -> float:
+        return self._current_bet
 
     # getters ---------------------
     @property
@@ -16,6 +44,9 @@ class Player():
     @property
     def hand(self):
         return self._hand
+
+    def hand_str(self) -> str:
+        return ", ".join(str(card) for card in self._hand)
 
     # gives the player´s hand value, counting aces
     @property
